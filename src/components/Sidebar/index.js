@@ -1,12 +1,15 @@
 import Icon from "@chakra-ui/icon";
-import { Box, Divider, VStack } from "@chakra-ui/layout";
+import { Box, VStack } from "@chakra-ui/layout";
 import { BsHouseDoorFill } from "react-icons/bs";
 import { FaHashtag } from "react-icons/fa";
 import { IoMdNotifications } from "react-icons/io";
 import { HiOutlineUser } from "react-icons/hi";
 import { BiLogOut } from "react-icons/bi";
+import { useDisclosure } from "@chakra-ui/hooks";
+import ModalComponent from "../Modal/Modal";
 
 function Sidebar() {
+	const { isOpen, onOpen, onClose } = useDisclosure();
 	return (
 		<VStack
 			position="fixed"
@@ -17,6 +20,7 @@ function Sidebar() {
 			p={4}
 			marginTop="70px"
 			overflow="auto"
+			borderRight="1px solid rgb(47, 51, 54)"
 		>
 			<Box
 				width="100%"
@@ -84,11 +88,12 @@ function Sidebar() {
 					mb={3}
 					p={3}
 					_hover={{ bgColor: "rgba(23,191,99,0.2)" }}
+					onClick={onOpen}
 				>
 					<Icon aria-label="Home button" as={BiLogOut} w={7} h={7} />
+					<ModalComponent isOpen={isOpen} onClose={onClose} />
 				</Box>
 			</Box>
-			<Divider orientation="vertical" height="100%" position="fixed" top="-2" left="200px" />
 		</VStack>
 	);
 }

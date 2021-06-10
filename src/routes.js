@@ -1,26 +1,29 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { LoginPage } from "./pages";
+import { LoginPage, HomePage, RegisterPage } from "./pages";
+import { PrivateRoute } from "./privateRoutes";
 
 function AppRoutes() {
-	const user = useSelector((state) => state.login);
-	// if (!user.isAuthenticated) {
-	// 	return <Redirect
-	// }
+	const state = useSelector((state) => state.users);
+
+	// const userAuthenticated = localStorage.getItem("userAuthenticated");
+
 	return (
 		<Routes>
 			<Route
 				path="/"
 				element={
-					user.isAuthenticated ? (
-						<Navigate to="/home" replace={true} />
+					state.isAuthenticated ? (
+						<Navigate to="/home" replace />
 					) : (
-						<Navigate to="/login" replace={true} />
+						<Navigate to="/login" replace />
 					)
 				}
 			/>
-			<Route path="/login" element={<LoginPage />} />
+			<PrivateRoute exact path="/home" element={<HomePage />} />
+			<Route exact path="/login" element={<LoginPage />} />
+			<Route exact path="/register" element={<RegisterPage />} />
+			<PrivateRoute exact path="/:userName" element={<h2>Your profile!</h2>} />
 		</Routes>
 	);
 }
