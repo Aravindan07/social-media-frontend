@@ -1,17 +1,23 @@
 import { GridItem } from "@chakra-ui/layout";
 import { Grid } from "@chakra-ui/layout";
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { Navbar, Sidebar } from "./components";
 import AppRoutes from "./routes";
+import { loadUser } from "./pages/Login/usersSlice";
 
 function App() {
 	const location = useLocation();
-	// const state = useSelector((state) => state.users);
-	// useEffect(() => {
-	// 	if (!state.isAuthenticated) <Navigate to="/login" />;
-	// }, [state.isAuthenticated]);
+	const state = useSelector((state) => state.users);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		(async () => {
+			if (state.status === "idle") {
+				dispatch(loadUser());
+			}
+		})();
+	}, [dispatch, state.status]);
 
 	// const userAuthenticated = localStorage.getItem("userAuthenticated");
 

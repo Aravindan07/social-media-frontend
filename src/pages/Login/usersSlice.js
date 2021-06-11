@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { loginUserApi, registerUserApi } from "./usersApi";
+import { loginUserApi, registerUserApi, loadUserApi } from "./usersApi";
 
 export const loginUser = createAsyncThunk(
 	"users/login",
@@ -27,6 +27,17 @@ export const registerUser = createAsyncThunk(
 	}
 );
 
+export const loadUser = createAsyncThunk("users/loadUser", async (_, { rejectWithValue }) => {
+	console.log("Inside load user");
+	try {
+		const response = await loadUserApi();
+		console.log(response.data);
+		return response.data;
+	} catch (error) {
+		return rejectWithValue(error.response.data);
+	}
+});
+
 const initialState = {
 	status: "idle",
 	isAuthenticated: false,
@@ -40,7 +51,7 @@ export const usersSlice = createSlice({
 	reducers: {
 		logout: (state) => {
 			console.log("Inside logout", state.isAuthenticated);
-			// localStorage.removeItem("userAuthenticated");
+			localStorage.removeItem("userAuthenticated");
 			state.status = "idle";
 			state.isAuthenticated = !state.isAuthenticated;
 			state.user = null;
@@ -75,6 +86,20 @@ export const usersSlice = createSlice({
 			state.message = action.payload.message;
 		},
 		[registerUser.rejected]: (state, action) => {
+			console.log("Action", action);
+			state.status = "error";
+			state.message = action.payload.message;
+		},
+		[loadUser.pending]: (state) => {
+			state.status = "loading";
+		},
+		[loadUser.fulfilled]: (state, action) => {
+			state.status = "success";
+			state.isAuthenticated = true;
+			state.user = action.payload.user;
+			state.message = action.payload.message;
+		},
+		[loadUser.rejected]: (state, action) => {
 			console.log("Action", action);
 			state.status = "error";
 			state.message = action.payload.message;

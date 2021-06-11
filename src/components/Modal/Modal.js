@@ -1,19 +1,11 @@
-import {
-	Modal,
-	ModalOverlay,
-	ModalContent,
-	ModalHeader,
-	ModalFooter,
-	ModalBody,
-	ModalCloseButton,
-	Button,
-	Heading,
-	useToast,
-} from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { logout } from "../../pages/Login/usersSlice";
+import LogoutModal from "./LogoutModal";
+import EditProfileModal from "./EditProfileModal";
+import AddReplyModal from "./AddReplyModal";
 
-function ModalComponent({ isOpen, onClose }) {
+function ModalComponent({ isOpen, onClose, type, data }) {
 	const dispatch = useDispatch();
 	const toast = useToast();
 	const logoutHandler = () => {
@@ -27,34 +19,16 @@ function ModalComponent({ isOpen, onClose }) {
 			isClosable: true,
 		});
 	};
-	return (
-		<Modal isOpen={isOpen} onClose={onClose} isCentered>
-			<ModalOverlay />
-			<ModalContent>
-				<ModalHeader>Are you sure you want to logout ?</ModalHeader>
-				<ModalCloseButton />
-				{/* <ModalBody>
-					<Heading size="md">Are you sure you want to logout ?</Heading>
-				</ModalBody> */}
-
-				<ModalFooter justifyContent="space-between">
-					<Button
-						variant="ghost"
-						bg="#17bf63"
-						_hover={{
-							opacity: "0.8",
-						}}
-						onClick={logoutHandler}
-					>
-						Yes
-					</Button>
-					<Button colorScheme="red" bg="red.600" color="white" mr={3} onClick={onClose}>
-						Close
-					</Button>
-				</ModalFooter>
-			</ModalContent>
-		</Modal>
-	);
+	const showModal = () => {
+		if (type === "edit-profile") {
+			return <EditProfileModal isOpen={isOpen} onClose={onClose} />;
+		}
+		if (type === "add-reply") {
+			return <AddReplyModal isOpen={isOpen} onClose={onClose} />;
+		}
+		return <LogoutModal isOpen={isOpen} onClose={onClose} logoutHandler={logoutHandler} />;
+	};
+	return <>{showModal()}</>;
 }
 
 export default ModalComponent;
