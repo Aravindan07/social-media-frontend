@@ -6,3 +6,5 @@ export { default as ModalComponent } from "./Modal/Modal";
 export { default as PostComponent } from "./Post/Post";
 export { default as FollowersCard } from "./FollowersCard/FollowersCard";
 export { default as NotificationCard } from "./NotificationCard/NotificationCard";
+export { default as ReactionsComponent } from "./Reactions/Reactions";
+export { default as NameAvatar } from "./NameAvatar/NameAvatar";

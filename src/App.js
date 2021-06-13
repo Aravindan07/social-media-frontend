@@ -14,7 +14,7 @@ function App() {
 	useEffect(() => {
 		(async () => {
 			if (state.status === "idle") {
-				dispatch(loadUser());
+				await dispatch(loadUser());
 			}
 		})();
 	}, [dispatch, state.status]);

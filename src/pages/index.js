@@ -5,3 +5,4 @@ export { default as ProfilePage } from "./Profile/Profile";
 export { default as FollowersPage } from "./Followers/Followers";
 export { default as ExplorePage } from "./Explore/Explore";
 export { default as NotificationsPage } from "./Notifications/Notifications";
+export { default as PostPage } from "./PostPage/PostPage";

@@ -10,49 +10,58 @@ import {
 	useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
-import { AiOutlineRetweet } from "react-icons/ai";
+// import { AiOutlineRetweet } from "react-icons/ai";
 import { BsLink } from "react-icons/bs";
 import { FaRegComment, FaRegHeart } from "react-icons/fa";
 import { FiShare } from "react-icons/fi";
 import { ModalComponent } from "../../components";
 
-function Reactions() {
+function Reactions({ data, noComments }) {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	return (
-		<Box display="flex" justifyContent="space-between" width="80%" mt={4}>
-			<Flex alignItems="center" role="group">
-				<Box
-					p={3}
-					borderRadius="full"
-					display="flex"
-					alignItems="center"
-					justifyContent="center"
-					_hover={{ backgroundColor: "rgba(29,161,242,0.1)" }}
-					onClick={onOpen}
-				>
-					<Icon
-						as={FaRegComment}
-						w={4}
-						h={4}
-						fill="#6e767d"
-						stroke="#6e767d"
-						_groupHover={{
-							fill: "rgb(29,161,242)",
-							stroke: "rgb(29,161,242)",
-						}}
-					/>
-					<ModalComponent isOpen={isOpen} onClose={onClose} type="add-reply" data="" />
-				</Box>
-				<Text
-					fontSize="14px"
-					color="#6e767d"
-					marginLeft={1}
-					_groupHover={{ color: "rgb(29,161,242)" }}
-				>
-					27
-				</Text>
-			</Flex>
-			<Flex alignItems="center" role="group">
+		<>
+			<Box display="flex" justifyContent="space-between" width="80%" mt={4}>
+				{!noComments && (
+					<Flex alignItems="center" role="group" cursor="pointer">
+						<Box
+							p={3}
+							borderRadius="full"
+							display="flex"
+							alignItems="center"
+							justifyContent="center"
+							_hover={{ backgroundColor: "rgba(29,161,242,0.1)" }}
+							onClick={onOpen}
+						>
+							<Icon
+								as={FaRegComment}
+								w={4}
+								h={4}
+								fill="#6e767d"
+								stroke="#6e767d"
+								_groupHover={{
+									fill: "rgb(29,161,242)",
+									stroke: "rgb(29,161,242)",
+								}}
+							/>
+							<ModalComponent
+								isOpen={isOpen}
+								onClose={onClose}
+								type="add-reply"
+								data=""
+							/>
+						</Box>
+						<Text
+							fontSize="14px"
+							color="#6e767d"
+							marginLeft={1}
+							_groupHover={{ color: "rgb(29,161,242)" }}
+						>
+							{data.comments.length}
+						</Text>
+					</Flex>
+				)}
+
+				{/* <Flex alignItems="center" role="group">
 				<Box
 					p={3}
 					borderRadius="full"
@@ -83,69 +92,71 @@ function Reactions() {
 				>
 					4
 				</Text>
-			</Flex>
-			<Flex alignItems="center" role="group">
-				<Box
-					p={3}
-					borderRadius="full"
-					display="flex"
-					alignItems="center"
-					justifyContent="center"
-					_hover={{ backgroundColor: "rgba(224,36,94,0.1)" }}
-				>
-					<Icon
-						as={FaRegHeart}
-						w={4}
-						h={4}
-						fill="#6e767d"
-						stroke="#6e767d"
-						_hover={{
-							fill: "rgb(224,36,94)",
-							stroke: "rgb(224,36,94)",
-						}}
-						_groupHover={{
-							fill: "rgb(224,36,94)",
-							stroke: "rgb(224,36,94)",
-						}}
-					/>
-				</Box>
-				<Text
-					fontSize="14px"
-					color="#6e767d"
-					marginLeft={1}
-					_groupHover={{
-						color: "rgb(224,36,94)",
-					}}
-				>
-					127
-				</Text>
-			</Flex>
-			<Menu>
-				<MenuButton as={Box} role="group">
+			</Flex> */}
+				<Flex alignItems="center" role="group" cursor="pointer">
 					<Box
 						p={3}
 						borderRadius="full"
 						display="flex"
 						alignItems="center"
 						justifyContent="center"
-						_groupHover={{ backgroundColor: "rgba(29,161,242,0.1)" }}
+						_hover={{ backgroundColor: "rgba(224,36,94,0.1)" }}
 					>
 						<Icon
-							as={FiShare}
+							as={FaRegHeart}
 							w={4}
 							h={4}
+							fill="#6e767d"
 							stroke="#6e767d"
+							_hover={{
+								fill: "rgb(224,36,94)",
+								stroke: "rgb(224,36,94)",
+							}}
 							_groupHover={{
-								stroke: "rgb(29,161,242)",
+								fill: "rgb(224,36,94)",
+								stroke: "rgb(224,36,94)",
 							}}
 						/>
 					</Box>
-				</MenuButton>
-				<MenuList>
-					<MenuItem icon={<BsLink />}>Copy link to this tweet</MenuItem>
-				</MenuList>
-			</Menu>
-		</Box>
+					<Text
+						fontSize="14px"
+						color="#6e767d"
+						marginLeft={1}
+						_groupHover={{
+							color: "rgb(224,36,94)",
+						}}
+					>
+						{data.likes.length}
+					</Text>
+				</Flex>
+				<Menu>
+					<MenuButton as={Box} role="group" cursor="pointer">
+						<Box
+							p={3}
+							borderRadius="full"
+							display="flex"
+							alignItems="center"
+							justifyContent="center"
+							cursor="pointer"
+							_groupHover={{ backgroundColor: "rgba(29,161,242,0.1)" }}
+						>
+							<Icon
+								as={FiShare}
+								w={4}
+								h={4}
+								stroke="#6e767d"
+								_groupHover={{
+									stroke: "rgb(29,161,242)",
+								}}
+							/>
+						</Box>
+					</MenuButton>
+					<MenuList>
+						<MenuItem icon={<BsLink />}>Copy link to this tweet</MenuItem>
+					</MenuList>
+				</Menu>
+			</Box>
+		</>
 	);
 }
 

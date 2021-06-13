@@ -103,6 +103,7 @@ export const usersSlice = createSlice({
 			console.log("Action", action);
 			state.status = "error";
 			state.message = action.payload.message;
+			localStorage.removeItem("userAuthenticated");
 		},
 	},
 });

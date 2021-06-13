@@ -1,4 +1,3 @@
-import { Avatar } from "@chakra-ui/avatar";
 import { Button } from "@chakra-ui/button";
 import { Flex } from "@chakra-ui/layout";
 import { VStack } from "@chakra-ui/layout";
@@ -8,9 +7,11 @@ import { Textarea } from "@chakra-ui/textarea";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { NameAvatar } from "../index";
 
 function Compose() {
 	const state = useSelector((state) => state.users);
+
 	return (
 		<>
 			<VStack
@@ -29,7 +30,7 @@ function Compose() {
 						cursor="pointer"
 					>
 						<Link to={`/${state.user?.userName}`}>
-							<Avatar name="Kent Dodds" src="https://bit.ly/kent-c-dodds" />
+							<NameAvatar name={state?.user?.fullName || ""} />
 						</Link>
 					</Flex>
 					<Textarea
