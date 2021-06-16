@@ -20,7 +20,7 @@ function Login() {
 	};
 	const [{ name, userName, email, password }, setState] = useState(initialState);
 
-	const state = useSelector((state) => state.users);
+	const state = useSelector((state) => state.auth);
 
 	const dispatch = useDispatch();
 

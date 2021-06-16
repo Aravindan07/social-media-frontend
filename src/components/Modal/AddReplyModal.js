@@ -12,9 +12,39 @@ import {
 	Text,
 	Textarea,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addCommentToPost } from "../../pages/Home/postSlice";
 
-function AddReplyModal({ isOpen, onClose }) {
+function AddReplyModal({ isOpen, onClose, data }) {
+
+	const [comment, setComment] = useState("");
+
+	const onChangeHandler = (e) => {
+		e.preventDefault();
+		return setComment(e.target.value);
+	};
+
+	const state = useSelector((state) => state.auth);
+
+	const dispatch = useDispatch();
+
+	const addComments = async () => {
+		if (comment === "") {
+			return null;
+		}
+		//postUserId,postId, commentedUserId, comment;
+		await dispatch(
+			addCommentToPost({
+				postUserId: data.postUserId,
+				postId: data.postId,
+				commentedUserId: state?.user?._id,
+				comment,
+			})
+		);
+		return onClose();
+	};
+
 	return (
 		<Modal isOpen={isOpen} onClose={onClose} isCentered>
 			<ModalOverlay />
@@ -35,6 +65,8 @@ function AddReplyModal({ isOpen, onClose }) {
 							isRequired
 							_focus={{ border: "2px solid #17bf6e" }}
 							_hover={{ borderWidth: "2px" }}
+							value={comment}
+							onChange={(e) => onChangeHandler(e)}
 						/>
 					</FormControl>
 				</ModalBody>
@@ -50,6 +82,7 @@ function AddReplyModal({ isOpen, onClose }) {
 						_hover={{
 							opacity: "0.8",
 						}}
+						onClick={addComments}
 					>
 						Comment
 					</Button>

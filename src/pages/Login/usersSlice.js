@@ -6,7 +6,7 @@ export const loginUser = createAsyncThunk(
 	async ({ email, password }, { rejectWithValue }) => {
 		try {
 			const response = await loginUserApi(email, password);
-			console.log(response.data);
+
 			return response.data;
 		} catch (error) {
 			return rejectWithValue(error.response.data);
@@ -19,7 +19,7 @@ export const registerUser = createAsyncThunk(
 	async ({ name, userName, email, password }, { rejectWithValue }) => {
 		try {
 			const response = await registerUserApi(name, userName, email, password);
-			console.log(response.data);
+
 			return response.data;
 		} catch (error) {
 			return rejectWithValue(error.response.data);
@@ -28,10 +28,9 @@ export const registerUser = createAsyncThunk(
 );
 
 export const loadUser = createAsyncThunk("users/loadUser", async (_, { rejectWithValue }) => {
-	console.log("Inside load user");
 	try {
 		const response = await loadUserApi();
-		console.log(response.data);
+
 		return response.data;
 	} catch (error) {
 		return rejectWithValue(error.response.data);
@@ -50,7 +49,6 @@ export const usersSlice = createSlice({
 	initialState,
 	reducers: {
 		logout: (state) => {
-			console.log("Inside logout", state.isAuthenticated);
 			localStorage.removeItem("userAuthenticated");
 			state.status = "idle";
 			state.isAuthenticated = !state.isAuthenticated;
@@ -70,7 +68,6 @@ export const usersSlice = createSlice({
 			state.message = action.payload.message;
 		},
 		[loginUser.rejected]: (state, action) => {
-			console.log("Action", action);
 			state.status = "error";
 			state.message = action.payload.message;
 		},
@@ -86,7 +83,6 @@ export const usersSlice = createSlice({
 			state.message = action.payload.message;
 		},
 		[registerUser.rejected]: (state, action) => {
-			console.log("Action", action);
 			state.status = "error";
 			state.message = action.payload.message;
 		},
@@ -100,7 +96,6 @@ export const usersSlice = createSlice({
 			state.message = action.payload.message;
 		},
 		[loadUser.rejected]: (state, action) => {
-			console.log("Action", action);
 			state.status = "error";
 			state.message = action.payload.message;
 			localStorage.removeItem("userAuthenticated");

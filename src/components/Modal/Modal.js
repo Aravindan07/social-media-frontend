@@ -4,6 +4,9 @@ import { logout } from "../../pages/Login/usersSlice";
 import LogoutModal from "./LogoutModal";
 import EditProfileModal from "./EditProfileModal";
 import AddReplyModal from "./AddReplyModal";
+import LikedUsersModal from "./LikedUsersModal";
+import FollowingModal from "./FollowingModal";
+import FollowersModal from "./FollowersModal";
 
 function ModalComponent({ isOpen, onClose, type, data }) {
 	const dispatch = useDispatch();
@@ -20,13 +23,25 @@ function ModalComponent({ isOpen, onClose, type, data }) {
 		});
 	};
 	const showModal = () => {
-		if (type === "edit-profile") {
-			return <EditProfileModal isOpen={isOpen} onClose={onClose} />;
+		switch (type) {
+			case "edit-profile":
+				return <EditProfileModal isOpen={isOpen} onClose={onClose} data={data} />;
+			case "add-reply":
+				return <AddReplyModal isOpen={isOpen} onClose={onClose} data={data} />;
+			case "liked-by":
+				return <LikedUsersModal isOpen={isOpen} onClose={onClose} data={data} />;
+
+			case "show-following":
+				return <FollowingModal isOpen={isOpen} onClose={onClose} data={data} />;
+
+			case "show-followers":
+				return <FollowersModal isOpen={isOpen} onClose={onClose} data={data} />;
+
+			default:
+				return (
+					<LogoutModal isOpen={isOpen} onClose={onClose} logoutHandler={logoutHandler} />
+				);
 		}
-		if (type === "add-reply") {
-			return <AddReplyModal isOpen={isOpen} onClose={onClose} />;
-		}
-		return <LogoutModal isOpen={isOpen} onClose={onClose} logoutHandler={logoutHandler} />;
 	};
 	return <>{showModal()}</>;
 }

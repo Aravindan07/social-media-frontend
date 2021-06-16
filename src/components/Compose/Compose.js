@@ -4,13 +4,30 @@ import { VStack } from "@chakra-ui/layout";
 import { HStack } from "@chakra-ui/layout";
 import { Divider } from "@chakra-ui/react";
 import { Textarea } from "@chakra-ui/textarea";
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { NameAvatar } from "../index";
+import { addPost } from "../../pages/Home/postSlice";
 
 function Compose() {
-	const state = useSelector((state) => state.users);
+	const state = useSelector((state) => state.auth);
+
+	const [post, setPost] = useState("");
+
+	const onChangeHandler = (e) => {
+		e.preventDefault();
+		setPost(e.target.value);
+	};
+
+	const dispatch = useDispatch();
+
+	const addPostHandler = () => {
+		if (post === "") {
+			return null;
+		}
+		return dispatch(addPost({ userId: state?.user?._id, post }));
+	};
 
 	return (
 		<>
@@ -43,6 +60,8 @@ function Compose() {
 						_focus={{
 							borderBottom: "2px solid #17bf63",
 						}}
+						value={post}
+						onChange={(e) => onChangeHandler(e)}
 					></Textarea>
 				</HStack>
 				<Flex width="80%" justifyContent="flex-end">
@@ -56,6 +75,7 @@ function Compose() {
 						_hover={{
 							opacity: 0.8,
 						}}
+						onClick={addPostHandler}
 					>
 						Tweet
 					</Button>

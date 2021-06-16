@@ -21,6 +21,6 @@ export const TokenConfig = () => {
 	return config;
 };
 
-export const fetchPostsApi = async (userId) => {
-	return axios.get(`${REACT_APP_BACKEND_URL}/users/${userId}/get-posts`, TokenConfig());
+export const fetchIndividualPostApi = (userId, postId) => {
+	return axios.get(`${REACT_APP_BACKEND_URL}/users/${userId}/${postId}/get-post`, TokenConfig());
 };

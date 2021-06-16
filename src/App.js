@@ -9,7 +9,7 @@ import { loadUser } from "./pages/Login/usersSlice";
 
 function App() {
 	const location = useLocation();
-	const state = useSelector((state) => state.users);
+	const state = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 	useEffect(() => {
 		(async () => {

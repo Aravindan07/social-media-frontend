@@ -10,18 +10,68 @@ import {
 	useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
-// import { AiOutlineRetweet } from "react-icons/ai";
 import { BsLink } from "react-icons/bs";
-import { FaRegComment, FaRegHeart } from "react-icons/fa";
+import { FaRegComment } from "react-icons/fa";
 import { FiShare } from "react-icons/fi";
+import { BsFillHeartFill } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
 import { ModalComponent } from "../../components";
+import { dislikePost, likeComment, likePost } from "../../pages/Home/postSlice";
 
-function Reactions({ data, noComments }) {
+function Reactions({ data, noComments, postUser, postId, type }) {
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const state = useSelector((state) => state.auth);
+
+	const checkLiked = () =>
+		data && data.likes.length > 0 && data.likes.find((el) => el._id === state.user?._id);
+
+	// const checkLikedInComments = () => {
+	// 	data?.likes?.length > 0 && data.likes.find((el) => el === state.user._id);
+	// };
+
+	// console.log("checkLikedInComments", checkLikedInComments());
+
+	const onOpenHandler = (e) => {
+		e.stopPropagation();
+		return onOpen();
+	};
+
+	const dispatch = useDispatch();
+
+	const likeClickHandler = (e) => {
+		e.stopPropagation();
+		//userPostId, likedUserId, postId
+		if (checkLiked()) {
+			return dispatch(
+				dislikePost({
+					userPostId: postUser,
+					likedUserId: state?.user?._id,
+					postId: data?._id,
+				})
+			);
+		}
+		dispatch(
+			likePost({ userPostId: postUser, likedUserId: state?.user?._id, postId: data?._id })
+		);
+	};
+
+	const commentLikeClickHandler = (e) => {
+		e.stopPropagation();
+		// userPostId, likedUserId, postId, commentId
+		dispatch(
+			likeComment({
+				userPostId: postUser,
+				likedUserId: state?.user?._id,
+				postId: postId,
+				commentId: data?._id,
+			})
+		);
+	};
+
 	return (
 		<>
 			<Box display="flex" justifyContent="space-between" width="80%" mt={4}>
-				{!noComments && (
+				{noComments && (
 					<Flex alignItems="center" role="group" cursor="pointer">
 						<Box
 							p={3}
@@ -30,7 +80,7 @@ function Reactions({ data, noComments }) {
 							alignItems="center"
 							justifyContent="center"
 							_hover={{ backgroundColor: "rgba(29,161,242,0.1)" }}
-							onClick={onOpen}
+							onClick={(e) => onOpenHandler(e)}
 						>
 							<Icon
 								as={FaRegComment}
@@ -47,7 +97,7 @@ function Reactions({ data, noComments }) {
 								isOpen={isOpen}
 								onClose={onClose}
 								type="add-reply"
-								data=""
+								data={{ postUserId: postUser, postId: data?._id }}
 							/>
 						</Box>
 						<Text
@@ -56,43 +106,11 @@ function Reactions({ data, noComments }) {
 							marginLeft={1}
 							_groupHover={{ color: "rgb(29,161,242)" }}
 						>
-							{data.comments.length}
+							{data?.comments?.length}
 						</Text>
 					</Flex>
 				)}
 
-				{/* <Flex alignItems="center" role="group">
-				<Box
-					p={3}
-					borderRadius="full"
-					display="flex"
-					alignItems="center"
-					justifyContent="center"
-					_hover={{ backgroundColor: "rgba(23,191,99,0.1)" }}
-				>
-					<Icon
-						as={AiOutlineRetweet}
-						w={4}
-						h={4}
-						fill="#6e767d"
-						stroke="#6e767d"
-						_groupHover={{
-							fill: "rgb(23,191,99)",
-							stroke: "rgb(23,191,99)",
-						}}
-					/>
-				</Box>
-				<Text
-					fontSize="14px"
-					color="#6e767d"
-					marginLeft={1}
-					_groupHover={{
-						color: "rgb(23,191,99)",
-					}}
-				>
-					4
-				</Text>
-			</Flex> */}
 				<Flex alignItems="center" role="group" cursor="pointer">
 					<Box
 						p={3}
@@ -101,13 +119,16 @@ function Reactions({ data, noComments }) {
 						alignItems="center"
 						justifyContent="center"
 						_hover={{ backgroundColor: "rgba(224,36,94,0.1)" }}
+						onClick={(e) =>
+							type === "comment" ? commentLikeClickHandler(e) : likeClickHandler(e)
+						}
 					>
 						<Icon
-							as={FaRegHeart}
+							as={BsFillHeartFill}
 							w={4}
 							h={4}
-							fill="#6e767d"
-							stroke="#6e767d"
+							fill={`${checkLiked() ? "rgb(224,36,94)" : "#6e767d"}`}
+							stroke={`${checkLiked() ? "rgb(224,36,94)" : "#6e767d"}`}
 							_hover={{
 								fill: "rgb(224,36,94)",
 								stroke: "rgb(224,36,94)",
@@ -126,7 +147,7 @@ function Reactions({ data, noComments }) {
 							color: "rgb(224,36,94)",
 						}}
 					>
-						{data.likes.length}
+						{data?.likes?.length}
 					</Text>
 				</Flex>
 				<Menu>

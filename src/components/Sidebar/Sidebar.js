@@ -12,8 +12,8 @@ import { useSelector } from "react-redux";
 
 function Sidebar() {
 	const { isOpen, onOpen, onClose } = useDisclosure();
-	const state = useSelector((state) => state.users);
-	console.log(state);
+	const state = useSelector((state) => state.auth);
+
 	return (
 		<VStack
 			position="fixed"
