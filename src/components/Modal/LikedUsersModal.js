@@ -35,11 +35,7 @@ function LikedUsersModal({ isOpen, onClose, data }) {
 				<ModalBody>
 					{data?.map((user) => (
 						<React.Fragment key={user._id}>
-							<Flex
-								width="100%"
-								p={4}
-								// borderBottom="1px solid #6e767d"
-							>
+							<Flex width="100%" p={4}>
 								<Box marginRight={4}>
 									<NameAvatar
 										name={user.fullName}
@@ -57,7 +53,7 @@ function LikedUsersModal({ isOpen, onClose, data }) {
 												@{user.userName}
 											</Text>
 										</Box>
-										{user._id !== state.user?._id && (
+										{/* {user._id !== state.user?._id && (
 											<Button
 												variant="outline"
 												borderRadius="2xl"
@@ -68,7 +64,7 @@ function LikedUsersModal({ isOpen, onClose, data }) {
 											>
 												Follow
 											</Button>
-										)}
+										)} */}
 									</Flex>
 									<Text>{user.bio}</Text>
 								</Box>

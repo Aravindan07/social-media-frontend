@@ -1,18 +1,26 @@
 import Icon from "@chakra-ui/icon";
 import { Box, VStack } from "@chakra-ui/layout";
-import { BsHouseDoorFill } from "react-icons/bs";
 import { FaHashtag } from "react-icons/fa";
 import { IoMdNotifications } from "react-icons/io";
 import { HiOutlineUser } from "react-icons/hi";
 import { BiLogOut } from "react-icons/bi";
+import { RiHome7Fill } from "react-icons/ri";
 import { useDisclosure } from "@chakra-ui/hooks";
 import ModalComponent from "../Modal/Modal";
-import { Link } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useColorModeValue } from "@chakra-ui/react";
 
 function Sidebar() {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const state = useSelector((state) => state.auth);
+	const iconColor = useColorModeValue("#000", "#fff");
+	const borderColor = useColorModeValue(
+		"1px solid rgb(235, 238, 240)",
+		"1px solid rgb(47, 51, 54)"
+	);
+
+	const location = useLocation();
 
 	return (
 		<VStack
@@ -24,7 +32,7 @@ function Sidebar() {
 			p={4}
 			marginTop="70px"
 			overflow="auto"
-			borderRight="1px solid rgb(47, 51, 54)"
+			borderRight={borderColor}
 		>
 			<Box
 				width="100%"
@@ -34,7 +42,7 @@ function Sidebar() {
 				alignItems="flex-end"
 				cursor="pointer"
 			>
-				<Link to="/home">
+				<NavLink to="/home">
 					<Box
 						borderRadius="50%"
 						display="flex"
@@ -43,19 +51,27 @@ function Sidebar() {
 						mb={3}
 						p={3}
 						role="group"
-						_hover={{ bgColor: "rgba(23,191,99,0.2)" }}
+						_hover={{
+							backgroundColor: "rgba(23, 191, 99, 0.2)",
+							transition: `backgroundColor 0.3s`,
+						}}
 					>
 						<Icon
 							aria-label="Home button"
-							as={BsHouseDoorFill}
-							w={7}
-							h={7}
-							_groupHover={{ fill: "#17bf63" }}
+							as={RiHome7Fill}
+							w={6}
+							h={6}
+							fill={location.pathname === "/home" ? "#17bf63" : iconColor}
+							stroke={location.pathname === "/home" ? "#17bf63" : iconColor}
+							_groupHover={{
+								fill: "#17bf63",
+								transition: `fill 0.2s`,
+							}}
 						/>
 					</Box>
-				</Link>
+				</NavLink>
 
-				<Link to={`/explore`}>
+				<NavLink to={`/explore`}>
 					<Box
 						borderRadius="50%"
 						display="flex"
@@ -69,14 +85,15 @@ function Sidebar() {
 						<Icon
 							aria-label="Home button"
 							as={FaHashtag}
-							w={7}
-							h={7}
-							_groupHover={{ fill: "#17bf63" }}
+							w={6}
+							h={6}
+							fill={location.pathname === "/explore" ? "#17bf63" : iconColor}
+							_groupHover={{ fill: "#17bf63", transition: `fill 0.2s` }}
 						/>
 					</Box>
-				</Link>
+				</NavLink>
 
-				<Link to="/notifications">
+				<NavLink to="/notifications">
 					<Box
 						borderRadius="50%"
 						display="flex"
@@ -90,14 +107,15 @@ function Sidebar() {
 						<Icon
 							aria-label="Home button"
 							as={IoMdNotifications}
-							w={7}
-							h={7}
-							_groupHover={{ fill: "#17bf63" }}
+							w={6}
+							h={6}
+							fill={location.pathname === "/notifications" ? "#17bf63" : iconColor}
+							_groupHover={{ fill: "#17bf63", transition: `fill 0.2s` }}
 						/>
 					</Box>
-				</Link>
+				</NavLink>
 
-				<Link to={`/${state.user?.userName}`}>
+				<NavLink to={`/${state.user?.userName}`}>
 					<Box
 						borderRadius="50%"
 						display="flex"
@@ -111,12 +129,26 @@ function Sidebar() {
 						<Icon
 							aria-label="Profile button"
 							as={HiOutlineUser}
-							w={7}
-							h={7}
-							_groupHover={{ fill: "#17bf63", stroke: "#17bf63" }}
+							w={6}
+							h={6}
+							fill={
+								location.pathname === `/${state.user?.userName}`
+									? "#17bf63"
+									: iconColor
+							}
+							stroke={
+								location.pathname === `/${state.user?.userName}`
+									? "#17bf63"
+									: iconColor
+							}
+							_groupHover={{
+								fill: "#17bf63",
+								stroke: "#17bf63",
+								transition: `fill 0.2s, stroke 0.2s`,
+							}}
 						/>
 					</Box>
-				</Link>
+				</NavLink>
 
 				<Box
 					borderRadius="50%"
@@ -130,11 +162,11 @@ function Sidebar() {
 					onClick={onOpen}
 				>
 					<Icon
-						aria-label="Home button"
+						aria-label="Logout button"
 						as={BiLogOut}
-						w={7}
-						h={7}
-						_groupHover={{ fill: "red.500" }}
+						w={6}
+						h={6}
+						_groupHover={{ fill: "red.500", transition: `fill 0.2s` }}
 					/>
 					<ModalComponent isOpen={isOpen} onClose={onClose} />
 				</Box>

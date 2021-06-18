@@ -32,8 +32,8 @@ function Profile() {
 		(async () => {
 			if (state.status === "success" && isOpen === false) {
 				await dispatch(fetchProfile(userName));
-				if (userProfile.status === "success")
-					await dispatch(fetchFollowingAndFollowers(userProfile?.profile?._id));
+				userProfile.profile?._id &&
+					(await dispatch(fetchFollowingAndFollowers(userProfile.profile?._id)));
 				setFollowersCount(userProfile?.profile?.followers);
 			}
 		})();
@@ -42,7 +42,6 @@ function Profile() {
 		dispatch,
 		state.status,
 		userName,
-		state.user?._id,
 		isOpen,
 		onClose,
 		userProfile?.profile?.followers,

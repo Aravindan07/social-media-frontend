@@ -3,24 +3,24 @@ import {
 	Box,
 	Divider,
 	Flex,
-	// Icon,
-	// Menu,
-	// MenuButton,
-	// MenuItem,
-	// MenuList,
+	Icon,
+	Menu,
+	MenuButton,
+	MenuItem,
+	MenuList,
 	Text,
 	useDisclosure,
 } from "@chakra-ui/react";
 import { ModalComponent, NameAvatar, ReactionsComponent } from "../../components";
-// import { RiUserFollowLine, RiUserUnfollowLine } from "react-icons/ri";
+import { RiUserFollowLine, RiUserUnfollowLine } from "react-icons/ri";
 import { useLocation, useParams } from "react-router-dom";
-// import { FiMoreHorizontal } from "react-icons/fi";
+import { FiMoreHorizontal } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../Home/postSlice";
 
 function PostPage() {
 	const state = useSelector((state) => state.auth);
-	// const userProfile = useSelector((state) => state.userProfile);
+	const userProfile = useSelector((state) => state.userProfile);
 	const dispatch = useDispatch();
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -41,9 +41,9 @@ function PostPage() {
 		window.scrollTo(0, 0);
 	}, [dispatch, postId, userName, state.status, state.user?._id, posts.status]);
 
-	// const checkForFollowing = () =>
-	// 	userProfile?.following?.length > 0 &&
-	// 	userProfile.following.find((el) => el === location.state?._id);
+	const checkForFollowing = () =>
+		userProfile?.following?.length > 0 &&
+		userProfile.following.find((el) => el._id === location.state?._id);
 
 	return (
 		<>
@@ -70,32 +70,40 @@ function PostPage() {
 													@{location.state?.userName}
 												</Text>
 											</Box>
-											{/* <Menu>
-												<MenuButton
-													as={Box}
-													borderRadius="full"
-													padding={3}
-													cursor="pointer"
-													_hover={{
-														backgroundColor: "rgba(29,161,242,0.2)",
-													}}
-												>
-													<Icon as={FiMoreHorizontal} w={5} h={5} />
-												</MenuButton>
-												{location?.state?._id !== state?.user?._id && (
-													<MenuList>
-														{checkForFollowing() ? (
-															<MenuItem icon={<RiUserUnfollowLine />}>
-																Unfollow @{location.state.userName}
-															</MenuItem>
-														) : (
-															<MenuItem icon={<RiUserFollowLine />}>
-																Follow @{location.state.userName}
-															</MenuItem>
-														)}
-													</MenuList>
-												)}
-											</Menu> */}
+											{location.state?._id !== state.user?._id && (
+												<Menu>
+													<MenuButton
+														as={Box}
+														borderRadius="full"
+														padding={3}
+														cursor="pointer"
+														_hover={{
+															backgroundColor: "rgba(29,161,242,0.2)",
+														}}
+													>
+														<Icon as={FiMoreHorizontal} w={5} h={5} />
+													</MenuButton>
+													{location?.state?._id !== state?.user?._id && (
+														<MenuList>
+															{checkForFollowing() ? (
+																<MenuItem
+																	icon={<RiUserUnfollowLine />}
+																>
+																	Unfollow @
+																	{location.state.userName}
+																</MenuItem>
+															) : (
+																<MenuItem
+																	icon={<RiUserFollowLine />}
+																>
+																	Follow @
+																	{location.state.userName}
+																</MenuItem>
+															)}
+														</MenuList>
+													)}
+												</Menu>
+											)}
 										</Box>
 
 										<Text mt={4} mb={4} fontSize="lg">
@@ -123,7 +131,7 @@ function PostPage() {
 												color="#6e767d"
 												cursor="pointer"
 												textDecoration="underline"
-												onClick={onOpen}
+												onClick={post?.likes?.length > 0 ? onOpen : null}
 											>
 												Likes
 											</Text>

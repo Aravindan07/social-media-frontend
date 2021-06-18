@@ -36,10 +36,11 @@ function Compose() {
 				width="100%"
 				paddingLeft={4}
 				paddingTop={4}
+				paddingRight={4}
 				alignItems="center"
 				justifyContent="space-evenly"
 			>
-				<HStack width="80%" alignSelf="center">
+				<HStack width={["100%", "100%", "80%"]} alignSelf="center">
 					<Flex
 						alignItems="center"
 						justifyContent="center"
@@ -64,7 +65,7 @@ function Compose() {
 						onChange={(e) => onChangeHandler(e)}
 					></Textarea>
 				</HStack>
-				<Flex width="80%" justifyContent="flex-end">
+				<Flex width={["100%", "100%", "80%"]} justifyContent="flex-end">
 					<Button
 						bg="#17bf63"
 						letterSpacing="wide"
@@ -76,6 +77,7 @@ function Compose() {
 							opacity: 0.8,
 						}}
 						onClick={addPostHandler}
+						isDisabled={post === ""}
 					>
 						Tweet
 					</Button>

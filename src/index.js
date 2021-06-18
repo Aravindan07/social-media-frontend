@@ -9,6 +9,9 @@ import { mode } from "@chakra-ui/theme-tools";
 import { BrowserRouter } from "react-router-dom";
 
 const theme = extendTheme({
+	config: {
+		initialColorMode: "dark",
+	},
 	styles: {
 		global: (props) => ({
 			body: {

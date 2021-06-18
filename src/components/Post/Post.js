@@ -4,7 +4,7 @@ import { Box, Flex, Text } from "@chakra-ui/layout";
 import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { RiUserUnfollowLine, RiUserFollowLine } from "react-icons/ri";
-import { Divider } from "@chakra-ui/react";
+import { Divider, useColorModeValue } from "@chakra-ui/react";
 import { NameAvatar, ReactionsComponent } from "../../components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,8 @@ import { followUser, unFollowUser } from "../../pages/Profile/profileSlice";
 
 function Post({ post }) {
 	const navigate = useNavigate();
+
+	const hoverBg = useColorModeValue("rgba(0,0,0,0.03)", "rgba(255,255,255,0.03)");
 
 	const state = useSelector((state) => state.auth);
 	const userProfile = useSelector((state) => state.userProfile);
@@ -53,6 +55,9 @@ function Post({ post }) {
 							p={4}
 							cursor="pointer"
 							onClick={(e) => moveToPostPage(e, el)}
+							_hover={{
+								backgroundColor: hoverBg,
+							}}
 						>
 							<Box marginRight={4} mt={1} onClick={(e) => moveToProfile(e)}>
 								<NameAvatar name={post?.userId?.fullName} />

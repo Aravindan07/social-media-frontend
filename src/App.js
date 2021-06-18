@@ -24,8 +24,13 @@ function App() {
 	return (
 		<>
 			{location.pathname !== "/login" && location.pathname !== "/register" ? (
-				<Grid h="100vh" templateRows="70px auto" templateColumns="200px auto" gap={0}>
-					<GridItem rowSpan={2} colSpan={1}>
+				<Grid
+					h="100vh"
+					templateRows="70px auto"
+					templateColumns={["100%", "100%", "200px auto"]}
+					gap={0}
+				>
+					<GridItem rowSpan={2} colSpan={1} display={["none", "none", "grid"]}>
 						<Sidebar />
 					</GridItem>
 					<GridItem colSpan={1}>
