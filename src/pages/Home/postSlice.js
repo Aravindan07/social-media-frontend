@@ -104,6 +104,7 @@ const postSlice = createSlice({
 		},
 		[fetchPosts.fulfilled]: (state, action) => {
 			state.status = "success";
+			// state.posts = action.payload.posts.following || action.payload.posts;
 			state.posts = action.payload.posts;
 			state.message = action.payload.message;
 		},
@@ -116,13 +117,13 @@ const postSlice = createSlice({
 		},
 		[addPost.fulfilled]: (state, action) => {
 			const foundPost = state.posts.findIndex((el) => el._id === action.payload.posts._id);
+
 			state.posts[foundPost] = action.payload.posts;
 			state.status = "success";
 			// state.user.posts = action.payload.item;
 			state.message = action.payload.message;
 		},
 		[addPost.rejected]: (state, action) => {
-
 			state.status = "error";
 			state.message = action.payload.message;
 		},
@@ -136,52 +137,48 @@ const postSlice = createSlice({
 			state.message = action.payload.message;
 		},
 		[addCommentToPost.rejected]: (state, action) => {
-
 			state.status = "error";
 			state.message = action.payload.message;
 		},
 		[likePost.pending]: (state) => {
-
 			state.status = "loading";
 		},
 		[likePost.fulfilled]: (state, action) => {
-
 			const foundPost = state.posts.findIndex((el) => el._id === action.payload.posts._id);
+			// const foundPost = state.posts.findIndex(
+			// 	(el) => el.posts?._id === action.payload.posts._id
+			// );
 			state.posts[foundPost] = action.payload.posts;
 			state.message = action.payload.message;
 		},
 		[likePost.rejected]: (state, action) => {
-
 			state.status = "error";
 			state.message = action.payload.message;
 		},
 		[dislikePost.pending]: (state) => {
-
 			state.status = "loading";
 		},
 		[dislikePost.fulfilled]: (state, action) => {
-
 			const foundPost = state.posts.findIndex((el) => el._id === action.payload.posts._id);
+			// const foundPost = state.posts.findIndex(
+			// 	(el) => el.posts?._id === action.payload.posts._id
+			// );
 			state.posts[foundPost] = action.payload.posts;
 			state.message = action.payload.message;
 		},
 		[dislikePost.rejected]: (state, action) => {
-
 			state.status = "error";
 			state.message = action.payload.message;
 		},
 		[likeComment.pending]: (state) => {
-
 			state.status = "loading";
 		},
 		[likeComment.fulfilled]: (state, action) => {
-
 			const foundPost = state.posts.findIndex((el) => el._id === action.payload.posts._id);
 			state.posts[foundPost] = action.payload.posts;
 			state.message = action.payload.message;
 		},
 		[likeComment.rejected]: (state, action) => {
-
 			state.status = "error";
 			state.message = action.payload.message;
 		},

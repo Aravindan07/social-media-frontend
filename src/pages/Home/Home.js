@@ -1,4 +1,5 @@
 import { Flex, VStack } from "@chakra-ui/layout";
+import { Heading } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Compose, PostComponent } from "../../components";
@@ -26,6 +27,9 @@ function Home() {
 				{posts?.posts?.map((post) => (
 					<PostComponent key={post._id} post={post} />
 				))}
+				{/* {posts?.posts?.map((post) => (
+					<PostComponent key={post._id} post={post} />
+				))} */}
 			</Flex>
 		</VStack>
 	);

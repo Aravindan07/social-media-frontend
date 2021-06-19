@@ -47,7 +47,7 @@ function Post({ post }) {
 	return (
 		<>
 			{post &&
-				post.posts.map((el) => (
+				post?.posts?.map((el) => (
 					<React.Fragment key={el._id}>
 						<Flex
 							w="100%"

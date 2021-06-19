@@ -46,7 +46,6 @@ function Profile() {
 		onClose,
 		userProfile?.profile?.followers,
 		userProfile?.profile?._id,
-		// userProfile.status,
 	]);
 
 	// const checkForFollowing = () =>
@@ -120,7 +119,7 @@ function Profile() {
 							fontWeight="bold"
 							onClick={(e) => addToFollowingHandler(e, userProfile?.profile?._id)}
 						>
-							{!checkForFollowers() ? "Follow" : "Unfollow"}
+							{checkForFollowers() ? "Unfollow" : "Follow"}
 						</Button>
 					</Flex>
 				)}
