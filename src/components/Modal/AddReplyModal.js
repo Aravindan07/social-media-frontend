@@ -17,7 +17,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addCommentToPost } from "../../pages/Home/postSlice";
 
 function AddReplyModal({ isOpen, onClose, data }) {
-
 	const [comment, setComment] = useState("");
 
 	const onChangeHandler = (e) => {
@@ -54,7 +53,8 @@ function AddReplyModal({ isOpen, onClose, data }) {
 				<ModalCloseButton />
 				<ModalBody>
 					<Text color="#6e767d">
-						Replying to <span style={{ color: "#17bf6e" }}>@aravind33</span>
+						{/* Replying to <span style={{ color: "#17bf6e" }}>@aravind33</span> */}
+						Replying
 					</Text>
 					<FormControl id="name" my={4} isRequired>
 						<Textarea

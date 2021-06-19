@@ -27,8 +27,6 @@ function Post({ post }) {
 		userProfile?.following?.length > 0 &&
 		userProfile.following.find((el) => el._id === post?.userId?._id);
 
-	console.log("checkForFollowing", checkForFollowing());
-
 	const moveToProfile = (e) => {
 		e.stopPropagation();
 		return navigate(`/${post.userId.userName}`);
