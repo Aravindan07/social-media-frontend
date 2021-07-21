@@ -6,12 +6,12 @@ import { Box, Flex, Heading, Text } from "@chakra-ui/layout";
 import { registerUser } from "../Login/usersSlice";
 import { useSelector, useDispatch } from "react-redux";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
-import { Navigate, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import Icon from "@chakra-ui/icon";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-function Login() {
+function RegisterPage() {
 	const initialState = {
 		name: "",
 		userName: "",
@@ -27,6 +27,7 @@ function Login() {
 	const navigate = useNavigate();
 
 	const formSubmitHandler = async (e) => {
+		console.log("Inside Form submit");
 		e.preventDefault();
 		await dispatch(registerUser({ name, userName, email, password }));
 		return navigate("/home", { replace: true });
@@ -49,7 +50,6 @@ function Login() {
 			justifyContent="center"
 			minHeight="100vh"
 		>
-			{state.status === "success" && <Navigate to="/home" />}
 			<Heading size="lg" letterSpacing="wide">
 				Create your account
 			</Heading>
@@ -159,4 +159,4 @@ function Login() {
 	);
 }
 
-export default Login;
+export default RegisterPage;

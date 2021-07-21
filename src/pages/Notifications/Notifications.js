@@ -18,7 +18,6 @@ function Notifications() {
 						`${REACT_APP_BACKEND_URL}/users/${state?.user?._id}/get-notifications`,
 						TokenConfig()
 					);
-					console.log("data in notifications", data);
 					setNotifications(data.notifications.notifications);
 				} catch (error) {
 					console.log("error", error.response.status);
@@ -31,8 +30,6 @@ function Notifications() {
 			}
 		})();
 	}, [state.status, state?.user?._id]);
-
-	console.log({ notifications });
 
 	return (
 		<>

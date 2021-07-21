@@ -17,6 +17,7 @@ function AppRoutes() {
 	return (
 		<Routes>
 			<Route
+				exact
 				path="/"
 				element={
 					userAuthenticated ? (

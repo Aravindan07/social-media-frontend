@@ -1,6 +1,5 @@
 import {
 	Box,
-	Button,
 	Divider,
 	Flex,
 	Modal,
@@ -12,13 +11,10 @@ import {
 	Text,
 } from "@chakra-ui/react";
 import React from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import NameAvatar from "../NameAvatar/NameAvatar";
 
 function LikedUsersModal({ isOpen, onClose, data }) {
-	const state = useSelector((state) => state.auth);
-
 	const navigate = useNavigate();
 
 	const navigateToProfile = (user) => {

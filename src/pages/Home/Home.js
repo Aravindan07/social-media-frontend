@@ -1,5 +1,4 @@
 import { Flex, VStack } from "@chakra-ui/layout";
-import { Heading } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Compose, PostComponent } from "../../components";

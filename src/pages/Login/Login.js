@@ -6,7 +6,7 @@ import { Box, Flex, Heading, Text } from "@chakra-ui/layout";
 import { loginUser } from "./usersSlice";
 import { useSelector, useDispatch } from "react-redux";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import Icon from "@chakra-ui/icon";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -14,15 +14,13 @@ import { useToast } from "@chakra-ui/toast";
 
 function Login() {
 	const initialState = {
-		name: "",
 		email: "",
 		password: "",
 	};
-	const [{ name, email, password }, setState] = useState(initialState);
+	const [{ email, password }, setState] = useState(initialState);
 
 	const state = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
-	const location = useLocation();
 	const navigate = useNavigate();
 	const toast = useToast();
 
@@ -38,7 +36,7 @@ function Login() {
 				duration: 3000,
 				isClosable: true,
 			});
-		return navigate("/home");
+		return navigate("/home", { replace: true });
 	};
 
 	const onChangeHandler = (e) => {
@@ -50,6 +48,16 @@ function Login() {
 	const [showPassword, setShowPassword] = useState(false);
 	const handlePasswordVisibility = () => setShowPassword(!showPassword);
 
+	const useTestCredentials = () => {
+		const name1 = "email";
+		const name2 = "password";
+		setState((prevState) => ({
+			...prevState,
+			[name1]: "aravindanravi123@gmail.com",
+			[name2]: "aravind@123",
+		}));
+	};
+
 	return (
 		<>
 			<Flex
@@ -60,9 +68,7 @@ function Login() {
 				height="100vh"
 			>
 				<Heading size="lg" letterSpacing="wide">
-					{location.pathname === "/register"
-						? "Create your account"
-						: "Login to your account"}
+					Login to your Account
 				</Heading>
 				<Box
 					my={4}
@@ -77,22 +83,6 @@ function Login() {
 						<ErrorMessage message={state.message} />
 					)}
 					<form onSubmit={(e) => loginFormSubmitHandler(e)}>
-						{location.pathname === "/register" && (
-							<FormControl my={4} isRequired>
-								<FormLabel>Name</FormLabel>
-								<Input
-									size="lg"
-									variant="outline"
-									type="name"
-									name="name"
-									placeholder="John Doe"
-									borderColor="rgb(47, 51, 54)"
-									focusBorderColor="#17bf63"
-									value={name}
-									onChange={(e) => onChangeHandler(e)}
-								/>
-							</FormControl>
-						)}
 						<FormControl my={4} isRequired>
 							<FormLabel>Email</FormLabel>
 							<Input
@@ -148,26 +138,26 @@ function Login() {
 							width="full"
 							mt={4}
 						>
-							{location.pathname === "/register" ? "Register" : "Sign In"}
+							Sign In
 						</Button>
 					</form>
+					<Button
+						width="full"
+						mt={4}
+						color="white"
+						bg="#17bf63"
+						onClick={useTestCredentials}
+					>
+						Use Test Credentials
+					</Button>
 				</Box>
-				{location.pathname === "/login" ? (
-					<Text>
-						Don't have an account?
-						<span style={{ color: "#17bf63", letterSpacing: "1px" }}>
-							<Link to="/register"> Register</Link>
-						</span>{" "}
-						now
-					</Text>
-				) : (
-					<Text>
-						Already have an account?
-						<span style={{ color: "#17bf63", letterSpacing: "1px" }}>
-							<Link to="/login"> Login</Link>
-						</span>{" "}
-					</Text>
-				)}
+				<Text>
+					Don't have an account?
+					<span style={{ color: "#17bf63", letterSpacing: "1px" }}>
+						<Link to="/register"> Register</Link>
+					</span>{" "}
+					now
+				</Text>
 			</Flex>
 		</>
 	);
