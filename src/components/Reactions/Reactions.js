@@ -68,6 +68,15 @@ function Reactions({ data, noComments, postUser, postId, type }) {
 		);
 	};
 
+	const copyLinkForTweet = () => {
+		const el = document.createElement("input");
+		el.value = window.location.href;
+		document.body.appendChild(el);
+		el.select();
+		document.execCommand("copy");
+		document.body.removeChild(el);
+	};
+
 	return (
 		<>
 			<Box display="flex" justifyContent="space-between" width="80%" mt={4}>
@@ -173,7 +182,9 @@ function Reactions({ data, noComments, postUser, postId, type }) {
 						</Box>
 					</MenuButton>
 					<MenuList>
-						<MenuItem icon={<BsLink />}>Copy link to this tweet</MenuItem>
+						<MenuItem icon={<BsLink />} onClick={copyLinkForTweet}>
+							Copy link to this tweet
+						</MenuItem>
 					</MenuList>
 				</Menu>
 			</Box>

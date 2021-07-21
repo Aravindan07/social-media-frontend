@@ -9,3 +9,4 @@ export { default as NotificationCard } from "./NotificationCard/NotificationCard
 export { default as ReactionsComponent } from "./Reactions/Reactions";
 export { default as NameAvatar } from "./NameAvatar/NameAvatar";
 export { default as UserPostComponent } from "./UserPost/UserPost";
+export { default as LoaderComponent } from "./Loader/Loader";

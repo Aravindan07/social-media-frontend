@@ -94,7 +94,7 @@ export const usersSlice = createSlice({
 		},
 		[loadUser.rejected]: (state, action) => {
 			state.status = "error";
-			state.message = action.payload.message;
+			state.message = action.payload.message || "";
 			localStorage.removeItem("userAuthenticated");
 		},
 	},

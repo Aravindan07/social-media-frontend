@@ -3,7 +3,7 @@ import { Grid } from "@chakra-ui/layout";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
-import { Navbar, Sidebar } from "./components";
+import { Navbar, Sidebar, LoaderComponent } from "./components";
 import AppRoutes from "./routes";
 import { loadUser } from "./pages/Login/usersSlice";
 
@@ -18,8 +18,6 @@ function App() {
 			}
 		})();
 	}, [dispatch, state.status]);
-
-	// const userAuthenticated = localStorage.getItem("userAuthenticated");
 
 	return (
 		<>
@@ -37,13 +35,11 @@ function App() {
 						<Navbar />
 					</GridItem>
 					<GridItem colSpan={1}>
-						<AppRoutes />
+						{state.status === "loading" ? <LoaderComponent /> : <AppRoutes />}
 					</GridItem>
 				</Grid>
 			) : (
-				<>
-					<AppRoutes />
-				</>
+				<>{state.status === "loading" ? <LoaderComponent page="login" /> : <AppRoutes />}</>
 			)}
 		</>
 	);

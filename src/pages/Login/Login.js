@@ -139,7 +139,7 @@ function Login() {
 						</FormControl>
 						<Button
 							isLoading={state.status === "loading" ? true : false}
-							loadingText="Signing In"
+							loadingText="Checking..."
 							type="submit"
 							color="#17bf63"
 							borderColor="#17bf63"

@@ -26,7 +26,8 @@ function Compose() {
 		if (post === "") {
 			return null;
 		}
-		return dispatch(addPost({ userId: state?.user?._id, post }));
+		dispatch(addPost({ userId: state?.user?._id, post }));
+		return setPost("");
 	};
 
 	return (
